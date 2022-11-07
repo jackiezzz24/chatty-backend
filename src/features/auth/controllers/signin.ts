@@ -9,6 +9,12 @@ import { IAuthDocument } from '@auth/interfaces/auth.interface';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { userService } from '@service/db/user.service';
 import { IUserDocument } from '@user/interfaces/user.interface';
+// import { IResetPasswordParams, IUserDocument } from '@user/interfaces/user.interface';
+//import { mailTransport } from '@service/emails/mail.transport';
+//import { forgotPasswordTemplate } from '@service/emails/templates/forgot-password/forgot-password-template';
+// import moment from 'moment';
+// import publicIP from 'ip';
+// import { resetPasswordTemplate } from '@service/emails/templates/reset-password/reset-password-template';
 
 export class SignIn {
   @joiValidation(loginSchema)
@@ -23,6 +29,7 @@ export class SignIn {
     if (!passwordsMatch) {
       throw new BadRequestError('Invalid credentials');
     }
+
     const user: IUserDocument = await userService.getUserByAuthId(`${existingUser._id}`);
     const userJwt: string = JWT.sign(
       {
@@ -34,6 +41,24 @@ export class SignIn {
       },
       config.JWT_TOKEN!
     );
+
+    //await mailTransport.sendEmail('casimir.cronin52@ethereal.email', 'Testing development email', 'This is a test email to show that development email sender works.');
+
+    // Send password reset email to the user
+    // const resetLink =  `${config.CLIENT_URL}/reset-password?token=12434466234131`;
+    // const template: string = forgotPasswordTemplate.passwordResetTemplate(existingUser.username!, resetLink);
+    // emailQueue.addEmailJob('forgotPasswordEmail', {template, receiverEmail:'casimir.cronin52@ethereal.email', subject: 'Reset your password'});
+
+    // Send password reset confirmation email to the user
+    // const templateParams: IResetPasswordParams = {
+    //   username: existingUser.username!,
+    //   email: existingUser.email!,
+    //   ipaddress: publicIP.address(),
+    //   date: moment().format('DD/MM/YYYY HH:mm')
+    // };
+    // const template: string = resetPasswordTemplate.passwordResetConfirmationTemplate(templateParams);
+    // emailQueue.addEmailJob('forgotPasswordEmail', {template, receiverEmail:'casimir.cronin52@ethereal.email', subject: 'Password reset confirmation'});
+
     req.session = { jwt: userJwt };
     const userDocument: IUserDocument = {
       ...user,
