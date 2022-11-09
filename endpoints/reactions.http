@@ -25,7 +25,7 @@ withCredentials: true
 {}
 
 ###
-GET  {{baseUrl}}/{{urlPath}}/post/reactions/636885fe45bcd9f28f9cc22e
+GET  {{baseUrl}}/{{urlPath}}/post/reactions/6369afd4058448935e9ec52c
 Content-Type: application/json
 Accept: application/json
 withCredentials: true

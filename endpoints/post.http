@@ -1,6 +1,7 @@
 @baseUrl = http://localhost:5000
 @urlPath = api/v1
 
+//create a post 
 ###
 POST {{baseUrl}}/{{urlPath}}/post
 Content-Type: application/json
@@ -16,6 +17,7 @@ withCredentials: true
   "feelings": ""
 }
 
+//create a post with image
 ###
 POST {{baseUrl}}/{{urlPath}}/post/image/post
 Content-Type: application/json
@@ -33,29 +35,29 @@ withCredentials: true
 }
 
 ###
-POST {{baseUrl}}/{{urlPath}}/post/all/1
+GET {{baseUrl}}/{{urlPath}}/post/all/636885fe45bcd9f28f9cc22e
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 ###
-POST {{baseUrl}}/{{urlPath}}/post/images/1
+GET {{baseUrl}}/{{urlPath}}/post/images/1
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 ###
-DELETE {{baseUrl}}/{{urlPath}}/post/
+DELETE {{baseUrl}}/{{urlPath}}/post/6369afd4058448935e9ec52c 
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 ###
-PUT {{baseUrl}}/{{urlPath}}/post/636885fe45bcd9f28f9cc22e
+PUT {{baseUrl}}/{{urlPath}}/post/6369afd4058448935e9ec52c 
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
-
+//postId
 {
   "post": "post is updated",
   "bgColor": "#4AA1F3",
