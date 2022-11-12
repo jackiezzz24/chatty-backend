@@ -1,10 +1,10 @@
 import { BaseCache } from '@service/redis/base.cache';
 import Logger from 'bunyan';
+import { find } from 'lodash';
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
 import { ICommentDocument, ICommentNameList } from '@comment/interfaces/comment.interface';
-import { find } from 'lodash';
 
 const log: Logger = config.createLogger('commentsCache');
 
@@ -18,7 +18,7 @@ export class CommentCache extends BaseCache {
       if (!this.client.isOpen) {
         await this.client.connect();
       }
-      await this.client.LPUSH(`comment: ${postId}`, value);
+      await this.client.LPUSH(`comments:${postId}`, value);
       const commentsCount: string[] = await this.client.HMGET(`posts:${postId}`, 'commentsCount');
       let count: number = Helpers.parseJson(commentsCount[0]) as number;
       count += 1;
@@ -81,8 +81,9 @@ export class CommentCache extends BaseCache {
         list.push(Helpers.parseJson(item));
       }
       const result: ICommentDocument = find(list, (listItem: ICommentDocument) => {
-        return (listItem._id = commentId);
+        return listItem._id === commentId;
       }) as ICommentDocument;
+
       return [result];
     } catch (error) {
       log.error(error);

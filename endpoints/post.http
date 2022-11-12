@@ -9,7 +9,7 @@ Accept: application/json
 withCredentials: true
 
 {
-  "post": "This is my second post",
+  "post": "This is my first post",
   "bgColor": "#4AA1F3",
   "privacy": "Private",
   "gifUrl": "",
