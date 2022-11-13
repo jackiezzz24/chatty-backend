@@ -1,10 +1,15 @@
+import { NotificationModel } from '@notification/models/notification.schema';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { UserCache } from '@service/redis/user.cache';
 import { ICommentDocument, ICommentJob, ICommentNameList, IQueryComment } from '@comment/interfaces/comment.interface';
 import { CommentsModel } from '@comment/models/comment.schema';
 import { IPostDocument } from '@post/interfaces/post.interface';
 import { PostModel } from '@post/models/post.schema';
-import { Query } from 'mongoose';
+import mongoose, { Query } from 'mongoose';
+import { INotificationDocument, INotificationTemplate } from '@notification/interfaces/notification.interface';
+import { socketIONotificationObject } from '@socket/notification';
+import { notificationTemplate } from '@service/emails/templates/notifications/notification-template';
+import { emailQueue } from '@service/queues/email.queue';
 
 const userCache: UserCache = new UserCache();
 
@@ -21,6 +26,36 @@ class CommentService {
     const response: [ICommentDocument, IPostDocument, IUserDocument] = await Promise.all([comments, post, user]);
 
     // send comments notification
+    if (response[2].notifications.comments && userFrom !== userTo) {
+      const notificationModel: INotificationDocument = new NotificationModel();
+      const notifications = await notificationModel.insertNotification({
+        userFrom,
+        userTo,
+        message: `${username} commented on your post.`,
+        notificationType: 'comment',
+        entityId: new mongoose.Types.ObjectId(postId),
+        createdItemId: new mongoose.Types.ObjectId(response[0]._id!),
+        createdAt: new Date(),
+        comment: comment.comment,
+        post: response[1].post,
+        imgId: response[1].imgId!,
+        imgVersion: response[1].imgVersion!,
+        gifUrl: response[1].gifUrl!,
+        reaction: ''
+      });
+      // send to client with socketio
+      socketIONotificationObject.emit('insert notification', notifications, {userTo});
+
+      // send to email queue
+      const templateParams: INotificationTemplate = {
+        username: response[2].username!,
+        header: 'Comment Notification',
+        message:`${username} commented on your post.`,
+      };
+      const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
+      emailQueue.addEmailJob('commentsEmail', {receiverEmail: response[2].email!, template, subject: 'Post notification'});
+    }
+
   }
 
   public async getPostComments(query: IQueryComment, sort: Record<string, 1 | -1>): Promise<ICommentDocument[]> {
