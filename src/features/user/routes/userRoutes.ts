@@ -26,6 +26,7 @@ class UserRoutes {
     this.router.put('/user/profile/basic-info', authMiddleware.checkAuthentication, Edit.prototype.info);
     this.router.put('/user/profile/social-links', authMiddleware.checkAuthentication, Edit.prototype.social);
     this.router.put('/user/profile/settings', authMiddleware.checkAuthentication, UpdateSettings.prototype.notification);
+
     return this.router;
   }
 }
