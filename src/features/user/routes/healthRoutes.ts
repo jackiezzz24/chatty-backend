@@ -5,12 +5,14 @@ import { performance } from 'perf_hooks';
 import HTTP_STATUS from 'http-status-codes';
 import { config } from '@root/config';
 
+
 class HealthRoutes {
   private router: Router;
 
   constructor() {
     this.router = express.Router();
   }
+
 
   public health(): Router {
     this.router.get('/health', (req: Request, res: Response) => {
@@ -74,3 +76,4 @@ class HealthRoutes {
 }
 
 export const healthRoutes: HealthRoutes = new HealthRoutes();
+

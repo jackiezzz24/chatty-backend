@@ -4,13 +4,18 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "NODE_ENV=production pm2 start ./build/src/app.js -i 5 --attach --watch | bunyan",
+    "stop": "pm2 stop all",
+    "delete": "pm2 delete all",
     "dev": "nodemon -r tsconfig-paths/register src/app.ts | bunyan",
     "lint:check": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "prettier:check": "prettier --check src/**/*.{ts,json}",
     "prettier:fix": "prettier --write src/**/*.{ts,json}",
     "test": "jest --coverage=true -w=1 --forceExit --detectOpenHandles --watchAll=false",
-    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "seeds:dev": "npx ts-node src/seeds.ts",
+    "seeds:prod": "npx ts-node ./build/src/seeds.js"
   },
   "keywords": [],
   "author": "",
@@ -47,7 +52,7 @@
     "nodemailer": "^6.9.1",
     "redis": "^4.6.5",
     "socket.io": "^4.6.1",
-    "swagger-stats": "^0.99.5",
+    "swagger-stats": "^0.99.6",
     "typescript": "^4.9.5",
     "typescript-transform-paths": "^3.4.6"
   },
