@@ -10,6 +10,7 @@ import { NotificationModel } from '@notification/models/notification.schema';
 import { socketIONotificationObject } from '@socket/notification';
 import { notificationTemplate } from '@service/emails/templates/notifications/notification-template';
 import { emailQueue } from '@service/queues/email.queue';
+import { map } from 'lodash';
 
 class FollowerService {
   public async addFollowerToDB(userId: string, followeeId: string, username: string, followerDocumentId: ObjectId): Promise<void> {
@@ -165,6 +166,19 @@ class FollowerService {
     ]);
 
     return follower;
+  }
+
+  public async getFolloweesIds(userId: string): Promise<string[]> {
+    const followee = await FollowerModel.aggregate([
+      { $match: { followerId:  new mongoose.Types.ObjectId(userId) } },
+      {
+        $project: {
+          followeeId: 1,
+          _id: 0
+        }
+      }
+    ]);
+    return map(followee, (result) => result.followeeId.toString());
   }
 }
 
