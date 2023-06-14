@@ -9,7 +9,6 @@ class UserWorker {
   async addUserToDB(job: Job, done: DoneCallback): Promise<void> {
     try {
       const { value } = job.data;
-      // Add method to send data to database
       await userService.addUserData(value);
       job.progress(100);
       done(null, job.data);
@@ -54,7 +53,6 @@ class UserWorker {
       done(error as Error);
     }
   }
-  
 }
 
 export const userWorker: UserWorker = new UserWorker();

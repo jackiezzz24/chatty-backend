@@ -45,7 +45,7 @@ export class Add {
       if (!result?.public_id) {
         throw new BadRequestError(result.message);
       }
-      fileUrl = `https://res.cloudinary.com/dyamr9ym3/image/upload/v${result.version}/${result.public_id}`;
+      fileUrl = `https://res.cloudinary.com/dxhu2wrmc/image/upload/v${result.version}/${result.public_id}`;
     }
 
     const messageData: IMessageData = {

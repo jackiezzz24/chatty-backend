@@ -14,13 +14,13 @@ Accept: application/json
 withCredentials: true
 
 ###
-GET {{baseUrl}}/{{urlPath}}/user/profile/:userId
+GET {{baseUrl}}/{{urlPath}}/user/profile/636e972a38cad3e55428e8d8
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 ###
-GET {{baseUrl}}/{{urlPath}}/user/profile/posts/:username/:userId/:uId
+GET {{baseUrl}}/{{urlPath}}/user/profile/posts/wenny/636e976338cad3e55428e8e8/84740891792
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
@@ -32,13 +32,13 @@ Accept: application/json
 withCredentials: true
 
 ###
-GET {{baseUrl}}/{{urlPath}}/user/profile/search/sa
+GET {{baseUrl}}/{{urlPath}}/user/profile/search/ge
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 ###
-GET {{baseUrl}}/{{urlPath}}/user/profile/change-password
+PUT {{baseUrl}}/{{urlPath}}/user/profile/change-password
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
@@ -50,7 +50,7 @@ withCredentials: true
 }
 
 ###
-GET {{baseUrl}}/{{urlPath}}/user/profile/basic-info
+PUT {{baseUrl}}/{{urlPath}}/user/profile/basic-info
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
@@ -64,7 +64,7 @@ withCredentials: true
 
 
 ###
-GET {{baseUrl}}/{{urlPath}}/user/profile/social-links
+PUT {{baseUrl}}/{{urlPath}}/user/profile/social-links
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
@@ -77,7 +77,7 @@ withCredentials: true
 }
 
 ###
-GET {{baseUrl}}/{{urlPath}}/user/profile/settings
+PUT {{baseUrl}}/{{urlPath}}/user/profile/settings
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
