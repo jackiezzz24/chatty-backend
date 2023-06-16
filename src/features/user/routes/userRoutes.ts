@@ -6,7 +6,6 @@ import { Update } from '@user/controller/change-password';
 import { Edit } from '@user/controller/update-basic-info';
 import { UpdateSettings } from '@user/controller/update-settings';
 
-
 class UserRoutes {
   private router: Router;
 

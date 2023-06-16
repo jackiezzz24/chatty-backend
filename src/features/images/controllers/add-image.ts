@@ -23,11 +23,11 @@ export class Add {
     }
 
     const url = `http://res.cloudinary.com/dxhu2wrmc/image/upload/v${result.version}/${result.public_id}`;
-    const cachedUser: IUserDocument = await userCache.updateSingleUserItemInCache(
+    const cachedUser: IUserDocument = (await userCache.updateSingleUserItemInCache(
       `${req.currentUser!.userId}`,
       'profilePicture',
       url
-    ) as IUserDocument;
+    )) as IUserDocument;
 
     socketIOImageObject.emit('update user', cachedUser);
 

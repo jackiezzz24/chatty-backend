@@ -44,18 +44,17 @@ class CommentService {
         reaction: ''
       });
       // send to client with socketio
-      socketIONotificationObject.emit('insert notification', notifications, {userTo});
+      socketIONotificationObject.emit('insert notification', notifications, { userTo });
 
       // send to email queue
       const templateParams: INotificationTemplate = {
         username: response[2].username!,
         header: 'Comment Notification',
-        message:`${username} commented on your post.`,
+        message: `${username} commented on your post.`
       };
       const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
-      emailQueue.addEmailJob('commentsEmail', {receiverEmail: response[2].email!, template, subject: 'Post notification'});
+      emailQueue.addEmailJob('commentsEmail', { receiverEmail: response[2].email!, template, subject: 'Post notification' });
     }
-
   }
 
   public async getPostComments(query: IQueryComment, sort: Record<string, 1 | -1>): Promise<ICommentDocument[]> {

@@ -4,7 +4,7 @@ import { INotificationDocument } from '@notification/interfaces/notification.int
 import { notificationService } from '@service/db/notification.service';
 
 export class Get {
-  public async notifications (req: Request, res: Response): Promise<void> {
+  public async notifications(req: Request, res: Response): Promise<void> {
     const notifications: INotificationDocument[] = await notificationService.getNotification(req.currentUser!.userId);
     res.status(HTTP_STATUS.OK).json({ message: 'User notifications', notifications });
   }

@@ -1,8 +1,6 @@
-
 import { IFileImageJobData } from '@image/interfaces/image.interface';
 import { BaseQueue } from '@service/queues/base.queue';
 import { imageWorker } from '@worker/image.worker';
-
 
 class ImageQueue extends BaseQueue {
   constructor() {

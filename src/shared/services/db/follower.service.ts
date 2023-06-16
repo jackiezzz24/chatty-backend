@@ -62,16 +62,16 @@ class FollowerService {
         reaction: ''
       });
       // send to client with socketio
-      socketIONotificationObject.emit('insert notification', notifications, {userTo: followeeId});
+      socketIONotificationObject.emit('insert notification', notifications, { userTo: followeeId });
 
       // send to email queue
       const templateParams: INotificationTemplate = {
         username: response[1].username!,
         header: 'Follower Notification',
-        message:`${username} is now following you.`,
+        message: `${username} is now following you.`
       };
       const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
-      emailQueue.addEmailJob('followersEmail', {receiverEmail: response[1].email!, template, subject: 'Follower Notification'});
+      emailQueue.addEmailJob('followersEmail', { receiverEmail: response[1].email!, template, subject: 'Follower Notification' });
     }
   }
 
@@ -170,7 +170,7 @@ class FollowerService {
 
   public async getFolloweesIds(userId: string): Promise<string[]> {
     const followee = await FollowerModel.aggregate([
-      { $match: { followerId:  new mongoose.Types.ObjectId(userId) } },
+      { $match: { followerId: new mongoose.Types.ObjectId(userId) } },
       {
         $project: {
           followeeId: 1,
