@@ -25,7 +25,7 @@ type IBaseJobData =
   | IFileImageJobData
   | IChatJobData
   | IMessageData
-  | IUserJob; 
+  | IUserJob;
 
 let bullAdapters: BullAdapter[] = [];
 

@@ -56,16 +56,20 @@ class ReactionService {
         reaction: type!
       });
       // send to client with socketio
-      socketIONotificationObject.emit('insert notification', notifications, {userTo});
+      socketIONotificationObject.emit('insert notification', notifications, { userTo });
 
       // send to email queue
       const templateParams: INotificationTemplate = {
         username: updatedReaction[0].username!,
         header: 'Post reaction Notification',
-        message:`${username} reacted to your post.`,
+        message: `${username} reacted to your post.`
       };
       const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
-      emailQueue.addEmailJob('reactionsEmail', {receiverEmail: updatedReaction[0].email!, template, subject: 'Post reaction Notification'});
+      emailQueue.addEmailJob('reactionsEmail', {
+        receiverEmail: updatedReaction[0].email!,
+        template,
+        subject: 'Post reaction Notification'
+      });
     }
   }
 

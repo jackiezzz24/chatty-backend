@@ -1,4 +1,4 @@
-import { Server} from 'socket.io';
+import { Server } from 'socket.io';
 
 let socketIOImageObject: Server;
 
@@ -8,4 +8,4 @@ export class SocketIOImageHandler {
   }
 }
 
-export {socketIOImageObject};
+export { socketIOImageObject };

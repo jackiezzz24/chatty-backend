@@ -1,4 +1,4 @@
-import { Server} from 'socket.io';
+import { Server } from 'socket.io';
 
 let socketIONotificationObject: Server;
 
@@ -8,4 +8,4 @@ export class SocketIONotificationHandler {
   }
 }
 
-export {socketIONotificationObject};
+export { socketIONotificationObject };
